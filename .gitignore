@@ -1,0 +1,50 @@
+# Environments and local overrides
+.env
+.env.*
+.env.local
+.env.*.local
+!.env.example
+
+# Dependency caches
+node_modules/
+vendor/
+composer.lock
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+bun.lockb
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.nuxt/
+.astro/
+public/build/
+
+# Tooling and generated files
+coverage/
+.nyc_output/
+*.log
+*.tgz
+*.zip
+
+# Repository metadata / memory indexes
+.memsearch/
+.remember/
+
+# Local data (user-owned content must remain local-first)
+data/
+storage/
+exports/
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+.vscode/*
+!.vscode/*.code-workspace
