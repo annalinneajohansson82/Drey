@@ -12,14 +12,14 @@ An item is anything the user has captured. It has content (free text), a state, 
 Item {
   id:           UUID
   content:      string        // free text; first line is the retrieval handle (derived, not stored)
-  state:         ItemState
-  created_at:    timestamp
-  put_down_at:   timestamp?    // null when living or finished
-  put_down_note: String?
-  finished_at:   timestamp?    // null unless explicitly finished
-  released_at:   timestamp?    // null unless released
-  released_note:  string?       // persists after release; input to pattern view
-  tags:          AppetiteTags?
+  state:        ItemState
+  created_at:   timestamp
+  put_down_at:  timestamp?    // null if never set down
+  put_down:     PutDownNote?
+  finished_at:  timestamp?    // null unless explicitly finished
+  released_at:  timestamp?    // null unless released
+  release_note: string?       // persists after release; input to pattern view
+  tags:         AppetiteTags?
 }
 ```
 
@@ -68,10 +68,10 @@ Recorded when an item transitions from `living` to `dormant`. All fields are opt
 
 ```
 PutDownNote {
-  left_off:    string?   // "Where did you leave off?"
-  next_step:   string?   // "What would the next small step be?"
-  pull:        string?   // "What was pulling you toward this?"
-  put_down_note: string?   // "Anything else you want to make sure to remember if picking this back up in the future?"
+  left_off:  string?   // "Where did you leave off?"
+  next_step: string?   // "What would the next small step be?"
+  draw:      string?   // "What drew you to this?"
+  reminder:  string?   // "Anything you want to be sure not to forget if you pick this back up later?"
 }
 ```
 
