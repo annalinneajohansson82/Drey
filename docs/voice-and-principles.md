@@ -116,14 +116,13 @@ If it's managing feelings, cut to the fact.
 > Set down in October.
 *(Never "Last edited 247 days ago.")*
 
-**Close prompt**
-> Any final thoughts on this before it's closed?
-*(The item is closed; this note is kept and is the input to the pattern view. The interface must make the retained note visibly persist at the moment of closing, so the prompt never has to explain itself.)*
-
 **Close confirmation**
 > Closed.
 
-**Pattern view, on explicit request only**
+**Close prompt** *(post-v1 — only meaningful once close notes are retained)*
+> Any final thoughts on this before it's closed?
+
+**Pattern view** *(post-v1 — requires close note retention)*
 > Across what you've closed, these patterns came up more than once: [observed, concrete commonalities].
 
 **Empty state**
@@ -145,8 +144,8 @@ Product decisions the voice forces:
 5. **Putting down is a first-class action**, with the same care as starting. It's where re-entry gets cheap.
 6. **Patterns are mirrors, shown on request, in their own marked room.** Never inline, never unsolicited, never conclusive.
 7. **The user owns the data, structurally.** Local-first, exportable, plain formats. Your data stays yours. This is an architecture decision and the whole trust story in one sentence.
-8. **Put-down and close ask different questions.** They are opposite acts (one means "I'm coming back," the other means "I'm done handling this"), so they must never share a prompt. Put-down asks what future-you returning to the item would want to know. Close asks for final thoughts before the item is gone. If the two ever read the same, the app is telling the user it can't tell the acts apart.
-9. **The close note is the input to the pattern view.** The item is closed; its close note persists and becomes raw material for patterns. This couples the close prompt and the pattern feature: they evolve together, and the field's existence is justified by the pattern view it feeds. The interface must show the retained note persisting at the moment of closing, so the prompt never has to explain its own mechanics.
+8. **Put-down and close are opposite acts.** Put-down means "I'm coming back." Close means "I'm done handling this." In v1 close is a full deletion with no prompt. In a future version, if a close prompt is introduced, it must never share a prompt with put-down or feel interchangeable with it.
+9. **Close note and pattern view are a coupled post-v1 feature.** If introduced, a close prompt would ask for final thoughts before deletion; that note would persist and become the raw material for a pattern view. The two must be designed together — the prompt has no purpose without retention, and the pattern view has no input without the prompt.
 
 ---
 

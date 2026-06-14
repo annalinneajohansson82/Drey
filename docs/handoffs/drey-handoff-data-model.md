@@ -29,11 +29,11 @@ All changes are committed. Current HEAD: `28f0367` (PutDownNote field renames an
 
 See `docs/plans/data-model.md` for the full document. Key shape:
 
-- **Item**: `id`, `content`, `state`, `created_at`, `put_down_at?`, `put_down: PutDownNote?`, `finished_at?`, `closed_at?`, `close_note?`, `tags: AppetiteTags?`
+- **Item**: `id`, `content`, `state`, `created_at`, `put_down_at?`, `put_down: PutDownNote?`, `finished_at?`, `tags: AppetiteTags?`
 - **PutDownNote**: `left_off?`, `next_step?`, `draw?`, `reminder?` — all optional; bare set-down (none answered) is a complete act
 - **AppetiteTags**: `energy: EnergyLevel?`, `engagement: EngagementType?` — taxonomies not yet locked
 - **States**: `living | dormant | finished | closed`
-- **Storage**: one JSON file per item in `~/.drey/items/{id}.json`; closed items kept on disk (reduced record) for pattern view
+- **Storage**: one JSON file per item in `~/.drey/items/{id}.json`; closing deletes the file entirely (close note and pattern view are post-v1)
 
 ## Open questions (from doc section 9)
 
