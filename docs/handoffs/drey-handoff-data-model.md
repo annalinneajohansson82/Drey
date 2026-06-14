@@ -29,18 +29,18 @@ All changes are committed. Current HEAD: `28f0367` (PutDownNote field renames an
 
 See `docs/plans/data-model.md` for the full document. Key shape:
 
-- **Item**: `id`, `content`, `state`, `created_at`, `put_down_at?`, `put_down: PutDownNote?`, `finished_at?`, `released_at?`, `release_note?`, `tags: AppetiteTags?`
+- **Item**: `id`, `content`, `state`, `created_at`, `put_down_at?`, `put_down: PutDownNote?`, `finished_at?`, `closed_at?`, `close_note?`, `tags: AppetiteTags?`
 - **PutDownNote**: `left_off?`, `next_step?`, `draw?`, `reminder?` — all optional; bare set-down (none answered) is a complete act
 - **AppetiteTags**: `energy: EnergyLevel?`, `engagement: EngagementType?` — taxonomies not yet locked
-- **States**: `living | dormant | finished | released`
-- **Storage**: one JSON file per item in `~/.drey/items/{id}.json`; released items kept on disk for pattern view
+- **States**: `living | dormant | finished | closed`
+- **Storage**: one JSON file per item in `~/.drey/items/{id}.json`; closed items kept on disk (reduced record) for pattern view
 
 ## Open questions (from doc section 9)
 
 1. **Appetite tag taxonomy** — specific values for `EnergyLevel` and `EngagementType` need UX validation. Slider/non-deterministic input is locked as the gesture; the underlying taxonomy must be invisible to the user.
 2. **Put-down note history** — v1 stores only the most recent put-down note. Whether to retain history across multiple set-down/pick-up cycles is a scope decision.
 3. **Finished state behavior** — does finishing produce a prompt, or is it a silent state change? Not resolved.
-4. **State taxonomy naming** — `living`, `dormant`, `finished`, `released` are internal identifiers; display strings come from `voice-and-principles.md`. Whether these internal names are final is open.
+4. **State taxonomy naming** — `living`, `dormant`, `finished`, `closed` are internal identifiers; display strings come from `voice-and-principles.md`. Whether these internal names are final is open.
 
 ## Suggested next actions
 

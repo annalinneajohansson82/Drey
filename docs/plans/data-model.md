@@ -17,8 +17,8 @@ Item {
   put_down_at:  timestamp?    // null if never set down
   put_down:     PutDownNote?
   finished_at:  timestamp?    // null unless explicitly finished
-  released_at:  timestamp?    // null unless released
-  release_note: string?       // persists after release; input to pattern view
+  closed_at:    timestamp?    // null unless closed
+  close_note:   string?       // persists after close; input to pattern view
   tags:         AppetiteTags?
 }
 ```
@@ -30,7 +30,7 @@ Item {
 ## 2. States
 
 ```
-ItemState = "living" | "dormant" | "finished" | "released"
+ItemState = "living" | "dormant" | "finished" | "closed"
 ```
 
 | State | Meaning | Where it appears |
@@ -38,7 +38,7 @@ ItemState = "living" | "dormant" | "finished" | "released"
 | `living` | Active — the user is working on it or just captured it | Main view |
 | `dormant` | Set down — deliberately paused | Main view |
 | `finished` | Declared done by the user | Separate finished area |
-| `released` | Let go — item removed from active space; release note retained | Pattern view only |
+| `closed` | Closed — item removed from active space; close note retained | Pattern view only |
 
 **Dormancy is the default healthy state.** An item that has been set down is not overdue, not abandoned and not a problem. The data model makes no distinction between "set down yesterday" and "set down two years ago."
 
@@ -51,12 +51,12 @@ living  ──set down──►  dormant
 dormant ──pick up───►  living
 living  ──finish────►  finished   (opt-in, never pushed)
 dormant ──finish────►  finished   (opt-in, never pushed)
-living  ──release───►  released
-dormant ──release───►  released
-finished──release───►  released
+living  ──close─────►  closed
+dormant ──close─────►  closed
+finished──close─────►  closed
 ```
 
-- There is no transition back from `released`. The item is gone from active space.
+- There is no transition back from `closed`. The item is gone from active space.
 - `finished` items live in a separate area; they are still accessible but not in the main view alongside living/dormant items.
 - Setting down and picking up can repeat any number of times. Each set-down may produce a new put-down note; the most recent note is what re-entry shows. Past notes are not preserved in v1.
 
@@ -81,19 +81,67 @@ PutDownNote {
 
 ---
 
-## 5. Release Note
+## 5. Closed State
 
-Recorded when an item transitions to `released`. Single optional field.
+### What closing means
+
+Closing removes an item from the user's active space permanently. It is a deliberate, one-way act. Completion is not required — an item can be closed from any state.
+
+Closing is distinct from finishing:
+
+| | Finishing | Closing |
+|---|---|---|
+| Declares | Done | Done handling |
+| Requires completion | Yes | No |
+| Remains accessible | Yes, in finished area | No |
+
+The app never initiates closing. It never suggests it. It is always the user's act.
+
+### Transition
+
+One-way. There is no undo.
 
 ```
-release_note: string?   // "Any final thoughts on this before it's removed?"
+living   ──close──►  closed
+dormant  ──close──►  closed
+finished ──close──►  closed
 ```
 
-- The item is removed from active view at the moment of release.
-- The release note survives. It is the raw material the pattern view reads.
-- The interface must show the note persisting visibly at the moment of removal, so the prompt never has to explain its own purpose.
+Once closed, an item does not appear in any active, dormant, or finished view.
 
-**Put-down and release ask different questions.** Put-down asks what future-you returning would want to know. Release asks for final thoughts before removal. They are opposite acts and must never share a prompt or feel interchangeable.
+### Close note
+
+One optional question before the item is removed:
+
+> Any final thoughts on this before it's closed?
+
+Skippable. Answering nothing is a complete act. **Confirmation:** "Closed." — bare, no tail.
+
+The interface must show the close note persisting visibly at the moment the item is removed. This communicates without explanation that the note is kept and that closing is not deletion.
+
+**Close and put-down ask different questions.** They are opposite acts — put-down means "I'm coming back," closing means "I'm done handling this" — so they must never share a prompt or feel interchangeable.
+
+### What is retained after closing
+
+Closed items are not deleted from disk. A reduced record is kept.
+
+```
+ClosedItem {
+  id:         UUID
+  handle:     string     // first line of original content; stored at close
+  closed_at:  timestamp
+  close_note: string?
+}
+```
+
+Fields dropped at close: `content`, `state`, `created_at`, `put_down_at`, `put_down`, `finished_at`, `tags`.
+
+The handle is stored explicitly at the moment of closing, since the source `content` is not retained. Closing is not archiving — the reduced record signals this structurally.
+
+### What closed items are not
+
+- Not an archive. No "all closed items" list exists. Closed items are invisible to the user except through the pattern view.
+- Not a recycle bin. There is no restore.
 
 ---
 
@@ -125,7 +173,7 @@ Local-first. One JSON file per item, stored in a flat directory. No database req
 ~/.drey/items/{id}.json
 ```
 
-Items in `released` state are not deleted. They remain on disk so the pattern view can read their release notes. The file for a released item contains only the fields needed for pattern view: `id`, `released_at`, `release_note`, and the derived handle.
+Items in `closed` state are not deleted. They remain on disk so the pattern view can read their close notes. The file for a closed item contains only the fields needed for pattern view: `id`, `closed_at`, `close_note`, and the derived handle.
 
 **Export.** The items directory is the export. Plain JSON, human-readable without tooling.
 
@@ -133,7 +181,7 @@ Items in `released` state are not deleted. They remain on disk so the pattern vi
 
 ## 8. Pattern View Input
 
-The pattern view reads `release_note` from all `released` items. It surfaces, never concludes. It is shown only on explicit request, in its own marked area, never inline. It is never the landing view.
+The pattern view reads `close_note` from all `closed` items. It surfaces, never concludes. It is shown only on explicit request, in its own marked area, never inline. It is never the landing view.
 
 Nothing in the data model generates or stores patterns. Patterns are derived at display time and not cached.
 
@@ -144,4 +192,4 @@ Nothing in the data model generates or stores patterns. Patterns are derived at 
 1. **Appetite tag taxonomy.** The specific values for `EnergyLevel` and `EngagementType` need UX validation. The input gesture should be a slider or equivalent non-deterministic control — the user approximates, they do not classify. Approximate is fine; blank is fine. This rules out discrete labeled options as the primary input: a dropdown forces a decision; a slider accepts a gesture. Whatever taxonomy underlies the slider must be invisible to the user during input.
 2. **Put-down note history.** v1 stores only the most recent note. If the user sets down and picks up an item multiple times, earlier notes are lost. Whether to retain history is a scope decision.
 3. **Finished state behavior.** Does finishing an item produce a prompt ("Any thoughts on completing this?"), or is it a silent state change? Not resolved yet.
-4. **State taxonomy naming.** The handoff flags this as uncertain pending the data model. Current terms (`living`, `dormant`, `finished`, `released`) are internal identifiers; display strings come from `voice-and-principles.md`.
+4. **State taxonomy naming.** The handoff flags this as uncertain pending the data model. Current terms (`living`, `dormant`, `finished`, `closed`) are internal identifiers; display strings come from `voice-and-principles.md`.
