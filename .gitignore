@@ -16,8 +16,10 @@ bun.lockb
 
 # Build outputs
 dist/
+dev-dist/
 build/
 out/
+*.tsbuildinfo
 .next/
 .nuxt/
 .astro/
@@ -35,9 +37,10 @@ coverage/
 .remember/
 
 # Local data (user-owned content must remain local-first)
-data/
-storage/
-exports/
+# Anchored to the repo root so they don't match source dirs like src/lib/storage.
+/data/
+/storage/
+/exports/
 
 # Editor / OS
 .DS_Store

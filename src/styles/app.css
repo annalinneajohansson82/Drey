@@ -1,0 +1,238 @@
+/* Layout and component styling for Drey. Flat by default: boundaries are a
+ * single 1px border at --color-border, never a shadow. The accent appears only
+ * on the primary action and active state. */
+
+.app {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: clamp(1.5rem, 6vh, 5rem) 1.25rem 4rem;
+}
+
+.surface {
+  width: 100%;
+  max-width: var(--measure);
+}
+
+/* Quiet wordmark, present but unobtrusive. */
+.wordmark {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+  color: var(--color-muted);
+  margin-bottom: 2rem;
+}
+
+/* Bare confirmation line: one word, a full stop, nothing after. */
+.confirmation {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  min-height: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+/* Two quiet text switches (Capture / Find), the only chrome on the landing. */
+.modeswitch {
+  display: flex;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.modeswitch button {
+  border: none;
+  background: none;
+  padding: 0;
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+  cursor: pointer;
+}
+
+.modeswitch button[aria-current='true'] {
+  color: var(--color-accent);
+}
+
+/* Capture + free-text inputs render the user's words in the reading serif. */
+.userinput {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  padding: 0.875rem 1rem;
+  resize: vertical;
+}
+
+.userinput:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+  border-color: transparent;
+}
+
+.findfield {
+  min-height: auto;
+  resize: none;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.hint {
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+}
+
+/* Primary action: the one filled, accented control. */
+.btn-primary {
+  border: 1px solid var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-size: 0.9375rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+/* Secondary actions: bordered, never filled, never accented. */
+.btn {
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-size: 0.9375rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.btn-quiet {
+  border: none;
+  background: none;
+  color: var(--color-muted);
+  font-size: 0.9375rem;
+  padding: 0.5rem 0;
+  cursor: pointer;
+}
+
+.btn-primary:focus-visible,
+.btn:focus-visible,
+.btn-quiet:focus-visible,
+.modeswitch button:focus-visible,
+.result:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Retrieval results: a few quiet rows, never a full inventory. */
+.results {
+  list-style: none;
+  margin: 1.25rem 0 0;
+  padding: 0;
+}
+
+.result {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: none;
+  border-top: 1px solid var(--color-border);
+  background: none;
+  cursor: pointer;
+  padding: 0.875rem 0;
+}
+
+.results li:last-child .result {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.result .handle {
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  color: var(--color-ink);
+}
+
+.result .meta {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+  margin-top: 0.25rem;
+}
+
+.empty {
+  color: var(--color-muted);
+  font-size: 0.9375rem;
+  margin-top: 1.25rem;
+}
+
+/* Re-entry: the user's content, then any answered put-down prompts. */
+.content {
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  margin: 0 0 0.75rem;
+}
+
+.state-label {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  margin-bottom: 1.75rem;
+}
+
+.note {
+  border-top: 1px solid var(--color-border);
+  padding-top: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.note .question {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+  margin: 1rem 0 0.25rem;
+}
+
+.note .answer {
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  margin: 0;
+}
+
+/* Put-down / close prompt screens. */
+.prompt {
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  color: var(--color-ink);
+  margin-bottom: 0.875rem;
+}
+
+.closing-handle {
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  color: var(--color-muted);
+  margin-bottom: 1.5rem;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1.5rem;
+}
+
+.area-title {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: var(--color-muted);
+}
