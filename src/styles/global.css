@@ -1,0 +1,57 @@
+@import './tokens.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Accent marks the caret; flat surfaces, no shadows anywhere. */
+:root {
+  caret-color: var(--color-accent);
+}
+
+::selection {
+  background: var(--color-panel);
+}
+
+/* The user's own words. */
+.serif {
+  font-family: var(--font-serif);
+}
+
+/* The app's voice: labels, confirmations, timestamps. */
+.sans {
+  font-family: var(--font-sans);
+}
+
+button {
+  font-family: var(--font-sans);
+}
+
+/* Motion is state-change only and never gates content. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

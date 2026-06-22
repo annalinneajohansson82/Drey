@@ -16,8 +16,10 @@ bun.lockb
 
 # Build outputs
 dist/
+dev-dist/
 build/
 out/
+*.tsbuildinfo
 .next/
 .nuxt/
 .astro/

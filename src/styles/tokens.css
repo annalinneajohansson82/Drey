@@ -1,0 +1,31 @@
+/*
+ * Drey design tokens, from DESIGN.md.
+ *
+ * Monochromatic: every role shares hue ~357 (rose-adjacent) at different
+ * lightness. Colour does almost nothing here; the single accent marks
+ * interactive/active state and appears on a small fraction of any screen.
+ *
+ * Fonts use widely available system families so the app stays fully offline
+ * with no external requests (which also serves the PWA goal). Self-hosted Lora
+ * + Inter can be dropped in later without changing the two-materials rule.
+ */
+:root {
+  /* Neutral roles */
+  --color-bg: oklch(0.975 0.005 357);
+  --color-ink: oklch(0.12 0.01 357);
+  --color-muted: oklch(0.52 0.01 357);
+  --color-panel: oklch(0.955 0.006 357);
+  --color-border: oklch(0.52 0.01 357 / 0.28);
+
+  /* The single accent: primary action, active/selected state, text cursor */
+  --color-accent: oklch(0.45 0.07 357);
+  --color-on-accent: oklch(0.99 0 0);
+
+  /* Two materials: serif for the user's words, sans for the app's voice */
+  --font-serif: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, Georgia, serif;
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  --measure: 68ch;
+  --space: 1rem;
+  --radius: 4px;
+}
