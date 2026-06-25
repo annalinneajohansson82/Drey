@@ -7,7 +7,7 @@
 Drey is a small, calm, donationware app for capturing ideas/projects and setting them down without guilt, with low-friction re-entry later. Design phase; no production stack chosen yet.
 
 Read these before anything else:
-- `docs/handoffs/drey-handoff.md` — project framing, constraints, vocabulary, open questions
+- `docs/handoffs/drey-handoff-main.md` — project framing, constraints, vocabulary, open questions
 - `docs/voice-and-principles.md` — soul, voice rules, design principles (source of truth)
 - `docs/plans/data-model.md` — the artifact being refined (current state is correct and committed)
 - `docs/plans/capture-surface-brief.md` — locked design brief for the capture surface
@@ -23,7 +23,7 @@ Read these before anything else:
    - Documented that the appetite input gesture should be a slider or equivalent non-deterministic control — the user approximates, does not classify.
    - Fixed `put_down_at` comment: "null if never set down" (not "null when living", since a picked-up item retains its last put-down timestamp).
 
-All changes are committed. Current HEAD: `28f0367` (PutDownNote field renames and `put_down_at` comment fix).
+All changes are committed. Current branch: `docs/data-model` (merged with `main`).
 
 ## Current state of the data model
 
@@ -49,12 +49,13 @@ See `docs/plans/data-model.md` for the full document. Key shape:
 
 ## Suggested skills
 
-- `brainstorming` — if any open question needs structured exploration before deciding
-- `impeccable` — when the focus shifts to UI/UX surface design
+- `plan` — for structured scoping of v1 and resolving open questions
+- `spike` — for quick technical validation (e.g. stack, storage approach)
+- `claude-code` / `codex` / `opencode` — when moving from design docs into implementation
 
-## Working preferences (apply throughout)
+## Documentation standards (not optional)
 
 - Lead with the answer, structure over prose, max 2-3 options.
 - No em dashes. No motivational filler. No sycophancy.
-- JSDoc on all JS/TS (hard requirement).
+- JSDoc on all JS/TS (hard requirement). PHPDoc on all PHP (hard requirement).
 - Bare confirmations match Drey's voice: "Saved." "Set down." — the code follows the same discipline as the product.

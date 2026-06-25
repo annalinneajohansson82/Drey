@@ -1,4 +1,4 @@
-<!-- SEED: re-run /impeccable document once there's code to capture the actual tokens and components. -->
+<!-- SEED: re-run /impeccable document once there's code to capture the actual components and their states. -->
 
 ---
 name: Drey
@@ -39,18 +39,18 @@ Color strategy: **Restrained.** One very low-chroma accent alongside four neutra
 **The Hue Discipline Rule.** All five roles share hue ~357°. The palette is not multi-hue. The accent is not a different color from the ink — it is the same hue at a deliberately saturated midpoint. This coherence makes the system feel settled rather than assembled.
 
 ### Primary
-- **Muted rose accent** (hue ~357°, L ~0.45, C ~0.07): [to be resolved during implementation] — primary action buttons, active navigation state, text cursor. Never decorative. White text on filled backgrounds.
+- **Muted rose accent** (hue ~357°, L ~0.45, C ~0.07): `#8B5E5E` — primary action buttons, active navigation state, text cursor. Never decorative. White text on filled backgrounds.
 
 ### Neutral
-- **Off-white background** (hue ~357°, L ~0.975, C ~0.005): [to be resolved during implementation] — calmer than pure white, not warm enough to read as cream or paper.
-- **Near-black ink** (hue ~357°, L ~0.12, C ~0.010): [to be resolved during implementation] — body text on all surfaces. ≥7:1 contrast against background required.
-- **Muted text** (ink lightness pulled ~40% toward background, ~L 0.52, same hue): [to be resolved during implementation] — timestamps, metadata, secondary labels. ≥3.5:1 required.
-- **Surface panel** (background pulled ~10% toward ink, same hue, ~L 0.955): [to be resolved during implementation] — secondary regions, set-down prompt containers, re-entry panels.
+- **Off-white background** (hue ~357°, L ~0.975, C ~0.005): `#F7F4F4` — calmer than pure white, not warm enough to read as cream or paper.
+- **Near-black ink** (hue ~357°, L ~0.12, C ~0.010): `#1C1818` — body text on all surfaces. 15.4:1 contrast against background (WCAG AAA).
+- **Muted text** (~L 0.52, same hue): `#7A6E6E` — timestamps, metadata, secondary labels. 4.6:1 against background (WCAG AA).
+- **Surface panel** (~L 0.955, same hue): `#F0ECEC` — secondary regions, set-down prompt containers, re-entry panels.
 
 ## 3. Typography
 
-**Body / Content Font:** [Reading serif — warm but not ornate, legible at body sizes. Lora or Charter direction. To be chosen at implementation.]
-**UI Font:** [Neutral or humanist sans — for labels, confirmations, metadata. Inter, Geist Sans, or system-ui direction. To be chosen at implementation.]
+**Body / Content Font:** Lora — warm but not ornate, legible at body sizes. Open source, excellent italic for user-authored emphasis.
+**UI Font:** Inter — neutral, excellent at small sizes, open source, tabular nums for timestamps.
 
 **Character:** Two materials; one reading, one functional. The user's own words appear in the serif. The app's own voice — confirmations, labels, timestamps — appears in the sans. This material distinction tells the user whose voice they're reading without any other treatment.
 
@@ -68,13 +68,38 @@ Flat by default. No shadows. Depth is conveyed through the one additional neutra
 
 **The Flat-By-Default Rule.** If a shadow is appearing, remove it. Ask whether the element needs to feel elevated, or whether it just needs a boundary. A 1px border at muted satisfies boundary needs without introducing material depth. Shadows are not used — not restrained, not refined. Not used.
 
-## 5. Components
+## 5. Tokens (CSS Custom Properties)
+
+```css
+:root {
+  /* Colors */
+  --color-accent:       #8B5E5E;
+  --color-background:   #F7F4F4;
+  --color-ink:          #1C1818;
+  --color-muted:        #7A6E6E;
+  --color-surface:      #F0ECEC;
+
+  /* Typography */
+  --font-body:    'Lora', serif;
+  --font-ui:      'Inter', system-ui, sans-serif;
+
+  /* Scale */
+  --text-heading:   1.125rem;
+  --text-body:      1rem;
+  --text-label:     0.8125rem;
+  --text-confirm:   0.875rem;
+  --line-height-body: 1.65;
+  --max-ch:         70ch;
+}
+```
+
+## 6. Components
 
 No components yet. Re-run `/impeccable document` once there is code.
 
 Planned primitives: set-down prompt area (the put-down flow), re-entry view (return state), project list item (retrieval result), primary action button, bare confirmation, text input for capture.
 
-## 6. Do's and Don'ts
+## 7. Do's and Don'ts
 
 ### Do:
 - **Do** use the reading serif exclusively for the user's own words. The material difference is functional: it marks whose voice is on screen.
