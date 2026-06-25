@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drey — Retrieval (Results)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-accent:     #8B5E5E;
+  --color-background: #F7F4F4;
+  --color-ink:        #1C1818;
+  --color-muted:      #7A6E6E;
+  --color-surface:    #F0ECEC;
+  --font-body:        'Lora', serif;
+  --font-ui:          'Inter', system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-ui);
+  background: var(--color-background);
+  color: var(--color-ink);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.app {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 680px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 1.5rem;
+}
+.header {
+  padding-top: 2rem;
+  padding-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.header h1 {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-muted);
+  letter-spacing: 0.02em;
+}
+.header nav { display: flex; gap: 1.25rem; }
+.header nav a { font-size: 0.8125rem; color: var(--color-muted); text-decoration: none; }
+.header nav a:hover { color: var(--color-ink); }
+.retrieval-input-wrapper { padding-bottom: 1.5rem; }
+.retrieval-input {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  color: var(--color-ink);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--color-accent);
+  padding: 0.75rem 0;
+  outline: none;
+}
+.retrieval-input::placeholder { color: var(--color-muted); opacity: 0.6; }
+.results { flex: 1; padding-top: 0.5rem; }
+.result-item {
+  display: block;
+  padding: 1.25rem 0.5rem;
+  border-bottom: 1px solid var(--color-surface);
+  cursor: pointer;
+  transition: background 0.15s;
+  border-radius: 4px;
+  margin: 0 -0.5rem;
+  text-decoration: none;
+}
+.result-item:hover { background: var(--color-surface); }
+.result-handle {
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  color: var(--color-ink);
+  margin-bottom: 0.375rem;
+  line-height: 1.4;
+}
+.result-tags { display: flex; gap: 0.375rem; flex-wrap: wrap; }
+.result-tag {
+  font-size: 0.6875rem;
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  border-radius: 2px;
+  padding: 0.125rem 0.5rem;
+}
+.result-excerpt {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  margin-top: 0.5rem;
+  line-height: 1.5;
+  font-style: italic;
+}
+.footer {
+  padding: 1.5rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--color-surface);
+}
+.footer a { font-size: 0.8125rem; color: var(--color-muted); text-decoration: none; }
+.footer a:hover { color: var(--color-ink); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <h1>Drey</h1>
+    <nav><a href="finished-area.html">Finished</a></nav>
+  </header>
+
+  <div class="retrieval-input-wrapper">
+    <input type="text" class="retrieval-input" value="low energy busy hands" aria-label="Search projects by appetite or keyword">
+  </div>
+
+  <main class="results">
+    <a href="item-detail.html" class="result-item">
+      <h2 class="result-handle">Knit a scarf for Mom</h2>
+      <div class="result-tags">
+        <span class="result-tag">low energy</span>
+        <span class="result-tag">busy hands</span>
+      </div>
+      <p class="result-excerpt">Where did you leave off: On the 4th row of the ribbing pattern. Getting the tension even.</p>
+    </a>
+
+    <a href="item-detail.html" class="result-item">
+      <h2 class="result-handle">Redesign the portfolio site</h2>
+      <div class="result-tags">
+        <span class="result-tag">focused</span>
+      </div>
+      <p class="result-excerpt">Next step: Decide on the type system. Lora for body, Inter for UI.</p>
+    </a>
+
+    <a href="item-detail.html" class="result-item">
+      <h2 class="result-handle">Write a blog post about ADHD and tool design</h2>
+      <div class="result-tags">
+        <span class="result-tag">low energy</span>
+        <span class="result-tag">mind idle</span>
+      </div>
+    </a>
+  </main>
+
+  <footer class="footer">
+    <a href="#">+ New project</a>
+    <a href="#">Export</a>
+  </footer>
+</div>
+</body>
+</html>

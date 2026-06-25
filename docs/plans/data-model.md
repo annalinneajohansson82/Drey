@@ -17,8 +17,6 @@ Item {
   put_down_at:  timestamp?    // null if never set down
   put_down:     PutDownNote?
   finished_at:  timestamp?    // null unless explicitly finished
-  closed_at:    timestamp?    // null unless closed
-  close_note:   string?       // persists after close; input to pattern view
   tags:         AppetiteTags?
 }
 ```
@@ -95,53 +93,25 @@ Closing is distinct from finishing:
 | Requires completion | Yes | No |
 | Remains accessible | Yes, in finished area | No |
 
-The app never initiates closing. It never suggests it. It is always the user's act.
+The app never initiates closing and never suggests it. It is always the user's act.
 
 ### Transition
 
-One-way. There is no undo.
+One-way. There is no undo. The item is deleted from disk.
 
 ```
-living   ──close──►  closed
-dormant  ──close──►  closed
-finished ──close──►  closed
+living   ──close──►  (deleted)
+dormant  ──close──►  (deleted)
+finished ──close──►  (deleted)
 ```
 
-Once closed, an item does not appear in any active, dormant, or finished view.
+**Confirmation:** "Closed." — bare, no tail.
 
-### Close note
+### Future: close note and pattern view
 
-One optional question before the item is removed:
+A post-v1 enhancement may introduce a close note — a single optional prompt before deletion whose answer is retained as a reduced record. That retained record would become the raw material for a pattern view: an on-request-only mirror of commonalities across closed items.
 
-> Any final thoughts on this before it's closed?
-
-Skippable. Answering nothing is a complete act. **Confirmation:** "Closed." — bare, no tail.
-
-The interface must show the close note persisting visibly at the moment the item is removed. This communicates without explanation that the note is kept and that closing is not deletion.
-
-**Close and put-down ask different questions.** They are opposite acts — put-down means "I'm coming back," closing means "I'm done handling this" — so they must never share a prompt or feel interchangeable.
-
-### What is retained after closing
-
-Closed items are not deleted from disk. A reduced record is kept.
-
-```
-ClosedItem {
-  id:         UUID
-  handle:     string     // first line of original content; stored at close
-  closed_at:  timestamp
-  close_note: string?
-}
-```
-
-Fields dropped at close: `content`, `state`, `created_at`, `put_down_at`, `put_down`, `finished_at`, `tags`.
-
-The handle is stored explicitly at the moment of closing, since the source `content` is not retained. Closing is not archiving — the reduced record signals this structurally.
-
-### What closed items are not
-
-- Not an archive. No "all closed items" list exists. Closed items are invisible to the user except through the pattern view.
-- Not a recycle bin. There is no restore.
+Both are deferred from v1. The prompt has no purpose without retention, and the pattern view has no input without the prompt. They are a coupled feature and must be designed together.
 
 ---
 
@@ -173,17 +143,15 @@ Local-first. One JSON file per item, stored in a flat directory. No database req
 ~/.drey/items/{id}.json
 ```
 
-Items in `closed` state are not deleted. They remain on disk so the pattern view can read their close notes. The file for a closed item contains only the fields needed for pattern view: `id`, `closed_at`, `close_note`, and the derived handle.
+Closing an item deletes its file from disk. Nothing is retained.
 
 **Export.** The items directory is the export. Plain JSON, human-readable without tooling.
 
 ---
 
-## 8. Pattern View Input
+## 8. Pattern View (post-v1)
 
-The pattern view reads `close_note` from all `closed` items. It surfaces, never concludes. It is shown only on explicit request, in its own marked area, never inline. It is never the landing view.
-
-Nothing in the data model generates or stores patterns. Patterns are derived at display time and not cached.
+The pattern view is deferred from v1. See section 5 for the future design direction. It has no data model input in the current version.
 
 ---
 

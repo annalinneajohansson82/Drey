@@ -39,6 +39,10 @@ data/
 storage/
 exports/
 
+# Claude Code
+.claude/
+*.artifact.json
+
 # Editor / OS
 .DS_Store
 Thumbs.db
